@@ -1,3 +1,5 @@
+import time
+
 print("Welcome to Grade Generator")
 print()
 print("I will ask you a few questions to determine your letter grade and percentage score.")
@@ -44,7 +46,7 @@ def getTestName():
 def getMaxScore():
   while True:
     try:
-      max_score = int(input("What is the maximum score you could receive for this test?: "))
+      max_score = float(input("What is the maximum score you could receive for this test?: "))
       print()
     except ValueError:
       print()
@@ -59,10 +61,10 @@ def getMaxScore():
     else:
       return max_score
 
-def getScore():
+def getScore(maxScore):
   while True:
     try:
-      score = int(input("What is the score you received for this test?: "))
+      score = float(input("What is the score you received for this test?: "))
       print()
     except ValueError:
       print()
@@ -75,36 +77,50 @@ def getScore():
       print("To generate another grade for another test please click Stop on top right of the console and then click Run")
       print()
       continue
+    elif score > maxScore:
+      print()
+      print("Your score cannot be greater than the maximum score.")
+      print()
+      continue  
     else:
       return score      
 
 
-def grade(score, maxScore, studName):
-  perc = (score//maxScore) * 100
+def grade(score, maxScore, studName, name):
+  perc = (score/maxScore) * 100
+  print('Calculating percentage score for',name,"test...")
+  time.sleep(3)
+  print()
 
   if perc >= 90 and perc <=100:
     print('Hello',studName,'you are a phenomenal student!')
+    print()
     print("Letter Grade: A+  Percentage: {:0.2f} %".format(perc))
   if perc >= 80 and perc <=89:
     print('Hello',studName,' excellent student!')
+    print()
     print("Letter Grade: A  Percentage: {:0.2f} %".format(perc))  
   if perc >= 70 and perc <=79:
     print('Hello',studName,'you are great student!')
+    print()
     print("Letter Grade: B  Percentage: {:0.2f} %".format(perc))    
   if perc >= 60 and perc <=69:
     print('Hello',studName,'you are a good student!')
+    print()
     print("Letter Grade: C  Percentage: {:0.2f} %".format(perc))
   if perc >= 50 and perc <=59:
     print('Hello',studName,'you are a decent student!')
+    print()
     print("Letter Grade: D  Percentage: {:0.2f} %".format(perc))
   if perc < 50:
     print('Hello',studName,'Do not give up, keep studying and your marks will get better.')
+    print()
     print("Letter Grade: U  Percentage: {:0.2f} %".format(perc))
     
 if __name__ == "__main__":
   studName = getStudentName()
   name = getTestName()
   maxScore = getMaxScore()
-  score = getScore()
-  grade(score, maxScore, studName)
+  score = getScore(maxScore)
+  grade(score, maxScore, studName, name)
   endGame()
